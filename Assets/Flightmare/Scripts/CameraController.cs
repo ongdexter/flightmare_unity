@@ -562,11 +562,10 @@ namespace RPGFlightmare
 
         foreach (Object_t obj_state in sub_message.objects)
         {
-          // Apply translation, rotation, and scaling
-          // GameObject prefab = Resources.Load(obj_state.prefabID) as GameObject;
-          GameObject other_obj = internal_state.getGameobject(obj_state.ID, gate_template);
-          other_obj.transform.SetPositionAndRotation(ListToVector3(obj_state.position), ListToQuaternion(obj_state.rotation));
-          other_obj.transform.localScale = ListToVector3(obj_state.size);
+            GameObject prefab = Resources.Load(obj_state.prefabID) as GameObject;
+            GameObject other_obj = internal_state.getGameobject(obj_state.ID, prefab);
+            other_obj.transform.SetPositionAndRotation(ListToVector3(obj_state.position), ListToQuaternion(obj_state.rotation));
+            other_obj.transform.localScale = ListToVector3(obj_state.size);
         }
         {
           // third person view camera
@@ -705,11 +704,17 @@ namespace RPGFlightmare
       // Initialize additional objects
       foreach (var obj_state in settings.objects)
       {
-        // GameObject prefab = Resources.Load(obj_state.prefabID) as GameObject;
-        Debug.Log("obj_state id : " + obj_state.ID);
-        GameObject obj = internal_state.getGameobject(obj_state.ID, gate_template);
+        // try to load the target object
+        GameObject prefab = Resources.Load(obj_state.prefabID) as GameObject;
+        if(prefab == null)
+        {
+            // if loading failed, fallback to the gate
+            Debug.Log("Failed loading object, using default");
+            prefab = gate_template;
+        }
+        // Add the object
+        GameObject obj = internal_state.getGameobject(obj_state.ID, prefab);
         obj.transform.localScale = ListToVector3(obj_state.size);
-        // obj.layer = 9;
       }
       foreach (var vehicle in settings.vehicles)
       {

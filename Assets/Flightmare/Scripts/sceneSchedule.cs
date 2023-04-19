@@ -14,6 +14,7 @@ namespace RPGFlightmare
     public const string SCENE_TUNNELS = "Environments/Tunnels/Scenes/DemoSceneSimple";
     public const string SCENE_NATUREFOREST = "Environments/Forest/Scenes/DemoScene";
     public const string SCENE_INDUSTRIAL = "Environments/Industrial/Scenes/DemoScene";
+    public const string SCENE_PLANE = "Environments/Plane/Scenes/DemoScene";
     //
     public List<string> scenes_list = new List<string>();
     public int default_scene_id;
@@ -25,6 +26,7 @@ namespace RPGFlightmare
       scenes_list.Add(SCENE_GARAGE); 
       scenes_list.Add(SCENE_NATUREFOREST);
       scenes_list.Add(SCENE_TUNNELS);
+      scenes_list.Add(SCENE_PLANE);
 
       default_scene_id = 0;
       num_scene = scenes_list.Count;
@@ -75,6 +77,11 @@ namespace RPGFlightmare
     public void loadTunnel()
     {
       loadScene(4, true);
+    }
+
+    public void loadPlane()
+    {
+      loadScene(5, true);
     }
 
 
